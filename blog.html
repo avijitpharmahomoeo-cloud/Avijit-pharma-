@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avijit Pharmacy | Premium Health Insights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-orange: #f97316; /* Professional Orange */
+            --deep-orange: #ea580c;
+            --soft-orange: #fff7ed;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-main);
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .premium-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f3f4f6;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -12px rgba(249, 115, 22, 0.12);
+            border-color: var(--primary-orange);
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--soft-orange);
+            border-bottom-color: var(--primary-orange);
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Custom Scrollbar for Premium Feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fdba74;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-orange);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Premium Header -->
+    <header class="glass-header border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-orange-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight text-gray-900 block leading-none">Avijit</span>
+                    <span class="text-sm font-bold text-orange-500 uppercase tracking-widest">Pharmacy</span>
+                </div>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex space-x-10 text-[13px] font-bold uppercase tracking-widest text-gray-500">
+                <a href="#" class="hover:text-orange-500 transition-colors">Medicines</a>
+                <a href="#" class="hover:text-orange-500 transition-colors">Lab Tests</a>
+                <a href="#" class="text-orange-600 relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-full after:h-0.5 after:bg-orange-500">Health Journal</a>
+                <a href="#" class="hover:text-orange-500 transition-colors">Care Plans</a>
+            </nav>
+
+            <!-- Back Action -->
+            <div>
+                <a href="index.html" class="group flex items-center space-x-2 text-sm font-bold text-gray-700 bg-gray-50 hover:bg-orange-50 hover:text-orange-600 transition-all px-5 py-2.5 rounded-full border border-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    <span>Return</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Intro -->
+    <section class="bg-orange-50 py-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block px-4 py-1.5 bg-white text-orange-600 text-[11px] font-bold rounded-full shadow-sm mb-6 uppercase tracking-[0.2em]">Verified Healthcare Information</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">The Wellness <span class="text-orange-500">Archive.</span></h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">Expert perspectives on modern medicine, nutrition, and daily vitality curated by the specialists at Avijit Pharmacy.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-6 -mt-10 mb-20">
+        <!-- Loading State -->
+        <div id="loaderContainer" class="flex flex-col items-center justify-center py-20 bg-white rounded-3xl shadow-xl">
+            <div class="loader mb-4"></div>
+            <p class="text-orange-900/40 font-bold uppercase tracking-widest text-xs">Authenticating Knowledge Base</p>
+        </div>
+
+        <!-- Blog Posts Grid -->
+        <div id="blogContainer" class="grid grid-cols-1 md:grid-cols-2 gap-8 hidden">
+            <!-- Dynamic Posts Inserted Here -->
+        </div>
+    </main>
+
+    <!-- Full Post Modal -->
+    <div id="postModal" class="fixed inset-0 bg-gray-900/80 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white w-full max-w-4xl max-h-[92vh] rounded-[32px] overflow-y-auto relative shadow-2xl scale-in-center">
+            <button onclick="closeModal()" class="fixed md:absolute top-6 right-6 bg-white hover:bg-orange-50 p-3 rounded-full transition-all shadow-xl z-50 border border-gray-100 group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 group-hover:text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <div id="modalContent" class="p-8 md:p-16">
+                <!-- Content injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SPREADSHEET_ID = '1QRdKb6kFCoyXO_5IkB0rgEoHu44PiXDq6qYiS-Nb-2U';
+        const GID = '0';
+        const JSON_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+
+        let blogPosts = [];
+
+        async function fetchBlogs() {
+            try {
+                const response = await fetch(JSON_URL);
+                const text = await response.text();
+                
+                const regex = /google\.visualization\.Query\.setResponse\((.*)\);/;
+                const match = text.match(regex);
+                
+                if (match && match[1]) {
+                    const jsonData = JSON.parse(match[1]);
+                    const rows = jsonData.table.rows;
+
+                    blogPosts = rows.map((row, index) => {
+                        const rawContent = row.c[2] ? row.c[2].v : 'No content available.';
+                        return {
+                            id: index,
+                            timestamp: row.c[0] ? row.c[0].f || row.c[0].v : 'Editorial',
+                            imageUrl: row.c[1] ? row.c[1].v : 'https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?auto=format&fit=crop&q=80&w=1200',
+                            content: rawContent,
+                            title: extractTitle(rawContent),
+                            readTime: Math.ceil(rawContent.split(' ').length / 200) + ' min read'
+                        };
+                    });
+
+                    blogPosts.reverse(); 
+                    renderBlogs();
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                document.getElementById('loaderContainer').innerHTML = `
+                    <div class="text-center p-10">
+                        <div class="text-orange-500 mb-4 font-bold text-4xl">!</div>
+                        <p class="text-gray-900 font-bold">Network Connectivity Issue</p>
+                        <p class="text-gray-500 text-sm mt-1">Please check the source spreadsheet access.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function extractTitle(text) {
+            const firstLine = text.split('\n')[0];
+            return firstLine.length > 70 ? firstLine.substring(0, 70) + '...' : firstLine;
+        }
+
+        function renderBlogs() {
+            const container = document.getElementById('blogContainer');
+            const loader = document.getElementById('loaderContainer');
+            
+            container.innerHTML = '';
+            
+            blogPosts.forEach((post, idx) => {
+                const card = document.createElement('div');
+                const colSpan = idx === 0 ? 'md:col-span-2' : '';
+                card.className = `${colSpan} bg-white rounded-[24px] overflow-hidden premium-card cursor-pointer group flex flex-col`;
+                card.onclick = () => openModal(post.id);
+                
+                card.innerHTML = `
+                    <div class="relative overflow-hidden aspect-[16/9] ${idx === 0 ? 'md:aspect-[21/9]' : ''}">
+                        <img src="${post.imageUrl}" alt="Insight" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]" onerror="this.src='https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&q=80&w=1200'">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-extrabold text-orange-600 uppercase tracking-widest shadow-sm">
+                            Health Journal
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex items-center text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-4">
+                            <span>${post.timestamp}</span>
+                            <span class="mx-3 w-1 h-1 bg-orange-300 rounded-full"></span>
+                            <span>${post.readTime}</span>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-gray-900 mb-4 group-hover:text-orange-500 transition-colors leading-tight">
+                            ${post.title}
+                        </h2>
+                        <p class="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-6">
+                            ${post.content}
+                        </p>
+                        <div class="mt-auto flex items-center justify-between pt-6 border-t border-gray-50">
+                            <span class="text-orange-600 font-extrabold text-xs uppercase tracking-widest flex items-center">
+                                View Full Report
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            loader.classList.add('hidden');
+            container.classList.remove('hidden');
+        }
+
+        function openModal(id) {
+            const post = blogPosts.find(p => p.id === id);
+            const modal = document.getElementById('postModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.innerHTML = `
+                <div class="max-w-3xl mx-auto">
+                    <div class="flex items-center space-x-3 text-[11px] font-bold text-orange-600 uppercase tracking-[0.2em] mb-8">
+                        <span class="bg-orange-50 px-3 py-1 rounded">Editorial Insight</span>
+                        <span class="text-gray-300">•</span>
+                        <span class="text-gray-500">${post.timestamp}</span>
+                    </div>
+                    
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-8 leading-[1.15] tracking-tight">
+                        ${post.title}
+                    </h1>
+
+                    <div class="flex items-center space-x-4 mb-10 pb-10 border-b border-gray-100">
+                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold">AP</div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900">Avijit Pharmacy Editorial Board</p>
+                            <p class="text-xs text-gray-500">Curated Clinical Insights • ${post.readTime}</p>
+                        </div>
+                    </div>
+
+                    <img src="${post.imageUrl}" class="w-full h-auto rounded-[24px] mb-12 shadow-2xl shadow-orange-900/10" onerror="this.src='https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&q=80&w=1200'">
+                    
+                    <div class="prose prose-orange max-w-none mb-12">
+                        <p class="text-gray-700 text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-medium">
+                            ${post.content}
+                        </p>
+                    </div>
+
+                    <div class="pt-8 border-t border-gray-100 text-center">
+                        <button onclick="closeModal()" class="px-8 py-3 bg-gray-900 text-white font-bold rounded-2xl hover:bg-orange-600 transition-all shadow-lg">Close Article</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('postModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('postModal');
+            if (event.target == modal) closeModal();
+        }
+
+        window.onload = fetchBlogs;
+    </script>
+</body>
+</html>
