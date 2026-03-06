@@ -106,7 +106,6 @@
                     <a href="lab.html" class="flex items-center gap-4 p-3.5 rounded-xl hover:bg-orange-50 text-gray-700 transition-colors"><i data-lucide="flask-conical" class="w-5 h-5 text-gray-400"></i> <span class="font-medium text-sm">Lab Test</span></a>
                     <a href="consultant.html" class="flex items-center gap-4 p-3.5 rounded-xl hover:bg-orange-50 text-gray-700 transition-colors"><i data-lucide="stethoscope" class="w-5 h-5 text-gray-400"></i> <span class="font-medium text-sm">Consultancy</span></a>
                     <a href="blog.html" class="flex items-center gap-4 p-3.5 rounded-xl hover:bg-orange-50 text-gray-700 transition-colors"><i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i> <span class="font-medium text-sm">Blog</span></a>
-                    <a href="about.html" class="flex items-center gap-4 p-3.5 rounded-xl hover:bg-orange-50 text-gray-700 transition-colors"><i data-lucide="file-signature" class="w-5 h-5 text-gray-400"></i> <span class="font-medium text-sm">About us</span></a>
                     
                     <div class="mt-5 px-4 pb-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Support</div>
                     <!-- Help Desk Option -->
@@ -333,6 +332,20 @@
             </div>
         </div>
 
+        <!-- VOLUME SELECTION MODAL -->
+        <div id="volume-modal" class="fixed inset-0 z-[60] hidden flex items-end justify-center">
+            <div class="modal-overlay absolute inset-0" onclick="closeVolumeModal()"></div>
+            <div class="bg-white w-full max-w-md rounded-t-3xl relative z-10 transform translate-y-full transition-transform duration-300 flex flex-col shadow-2xl" id="volume-content">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white/90 backdrop-blur z-20 rounded-t-3xl">
+                    <h3 class="font-bold text-gray-800 text-sm tracking-wide">Select Volume</h3>
+                    <button onclick="closeVolumeModal()" class="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5 text-gray-600"></i></button>
+                </div>
+                <div class="p-6 flex flex-col gap-3" id="volume-options">
+                    <!-- Options injected via JS -->
+                </div>
+            </div>
+        </div>
+
         <!-- AD POPUP -->
         <div id="ad-popup-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
             <div class="modal-overlay absolute inset-0 backdrop-blur-sm" onclick="closeAdPopUp()"></div>
@@ -552,7 +565,9 @@
 
         function renderTopRecommended() {
             const container = document.getElementById('top-recommended-container');
-            const top10 = allProducts.slice(0, 10);
+            // Auto update latest 10 items (reversing the array so newest sheet entries come first)
+            const top10 = [...allProducts].reverse().slice(0, 10);
+            
             if (top10.length === 0) { 
                 container.innerHTML = `<p class="text-sm text-gray-400 px-4">No recommended products found.</p>`; 
                 return; 
@@ -616,7 +631,7 @@
             document.getElementById('d-price').innerText = `₹${p.price.toFixed(2)}`;
             document.getElementById('d-desc').innerText = p.description || "Premium medicine formulated for effective care. Consult a physician for specific dosage.";
             const btn = document.getElementById('d-add-btn');
-            btn.onclick = (p.stock === 2) ? null : () => { addToCart(p.id); closeDetails(); };
+            btn.onclick = (p.stock === 2) ? null : () => { addToCart(p.id); };
             btn.innerText = (p.stock === 2) ? "SOLD OUT" : "ADD TO CART";
             btn.className = (p.stock === 2) ? "w-full bg-gray-200 text-gray-500 py-4 rounded-xl font-bold cursor-not-allowed" : "w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-4 rounded-xl font-bold shadow-lg active:scale-95 transition-transform tracking-wide";
             document.getElementById('details-modal').classList.remove('hidden');
@@ -628,14 +643,80 @@
             setTimeout(() => document.getElementById('details-modal').classList.add('hidden'), 300);
         }
 
+        // Modified Add to Cart Logic with Volume Selection
         function addToCart(id) {
             const p = allProducts.find(x => x.id === id);
             if(!p || p.stock === 2) return;
-            const item = cart.find(i => i.id === id);
-            if(item) item.quantity++; else cart.push({...p, quantity: 1});
+            
+            // Check if it is a liquid category (Dilution or Mother Tincture)
+            const isLiquid = p.category.toLowerCase().includes('dilution') || p.category.toLowerCase().includes('mother tincture');
+            
+            if (isLiquid) {
+                openVolumeModal(p);
+            } else {
+                finalizeAddToCart(p.id, null, null);
+            }
+        }
+
+        function openVolumeModal(p) {
+            const modal = document.getElementById('volume-modal');
+            const content = document.getElementById('volume-content');
+            const optionsContainer = document.getElementById('volume-options');
+            
+            // Generate ml multipliers (1x, 2x, 3x)
+            const options = [
+                { ml: 10, mult: 1 },
+                { ml: 20, mult: 2 },
+                { ml: 30, mult: 3 }
+            ];
+            
+            optionsContainer.innerHTML = options.map(opt => {
+                const calculatedPrice = p.price * opt.mult;
+                return `
+                    <button onclick="finalizeAddToCart('${p.id}', ${opt.ml}, ${calculatedPrice})" class="flex justify-between items-center w-full p-4 border border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition-colors shadow-sm active:scale-95">
+                        <span class="font-bold text-gray-800 text-base">${opt.ml} ml</span>
+                        <span class="font-bold text-orange-600 text-base">₹${calculatedPrice.toFixed(2)}</span>
+                    </button>
+                `;
+            }).join('');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => content.classList.remove('translate-y-full'), 10);
+        }
+
+        function closeVolumeModal() {
+            const content = document.getElementById('volume-content');
+            content.classList.add('translate-y-full');
+            setTimeout(() => document.getElementById('volume-modal').classList.add('hidden'), 300);
+        }
+
+        function finalizeAddToCart(id, ml, priceOverride) {
+            const p = allProducts.find(x => x.id === id);
+            if(!p) return;
+            
+            if(ml) closeVolumeModal();
+            closeDetails(); // Close details modal if open
+            
+            const cartId = ml ? `${p.id}_${ml}ml` : p.id;
+            const cartName = ml ? `${p.name} (${ml} ml)` : p.name;
+            const cartPrice = priceOverride !== null ? priceOverride : p.price;
+            
+            const item = cart.find(i => i.id === cartId);
+            if(item) {
+                item.quantity++;
+            } else {
+                cart.push({
+                    id: cartId,
+                    originalId: p.id,
+                    image: p.image,
+                    name: cartName,
+                    price: cartPrice,
+                    quantity: 1
+                });
+            }
             sessionStorage.setItem('avijitCart', JSON.stringify(cart));
             updateCartBadge();
-            showToast(`${p.name} added to cart`);
+            showToast(`${cartName} added to cart`);
         }
 
         function updateQuantity(id, change) {
